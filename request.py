@@ -3,6 +3,11 @@ from urllib.parse import urlencode, unquote, quote_plus
 
 import urllib3
 from urllib.parse import urlencode, unquote, quote_plus
+from real_estate_ex1 import Local_code
+
+
+
+
 
 def make_restfull_query(lawd_cd, deal_ymd) :
         url = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?"
@@ -47,7 +52,12 @@ def print_xml(xml_str) :
 
         
 def main():
-        result = make_restfull_query('41287', '201809')
+        lc = Local_code()
+        lc.make_local_code()
+
+        area_code = lc.find_area_code('용산구')
+        result = make_restfull_query(area_code, '201809')
+
         print(result.status)
         # print(result.data)
         print_xml(result.data)
