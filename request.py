@@ -76,31 +76,50 @@ def xml_to_dict(xml_str) :
 
 
 
-def find_my_apt(apt_, apt_dong, apt_name):
-        my_apt_ = list()
-        for apt in apt_ :
-                print(apt)
-                # if apt['법정동'] == apt_dong and apt['아파트'] == apt_name :
-                if apt['법정동'] == apt_dong :
-                        my_apt_.append(apt)
-                        print(apt)
+def find_my_apt(apt_, apt_dong, apt_name=None):
+        my_apt_ = []
+        apt_dong_strip = apt_dong.strip()
 
+        if apt_name == None :
+            pt_name_strip = ''
+            my_apt_ = find_my_apt_dong(apt_, apt)
+        else :
+            apt_name_strip = apt_name.strip()
+
+        find_my_apt_dong(apt_, apt_dong_strip, apt_name_strip)
         return my_apt_
 
 
+def find_my_apt_dong(apt_, apt_dong_strip, apt_name_strip):
+    my_apt_ = []
+    for apt in apt_:
+        if apt['법정동'].strip() == apt_dong_strip and apt['아파트'].strip() == apt_name_strip:
+            my_apt_.append(apt)
+    return my_apt_
+
+
+
+def lineno():
+    import inspect
+    """Returns the current line number in our program."""
+    return inspect.currentframe().f_back.f_lineno
+
 def main():
+        import sys
         lc = Local_code()
         lc.make_local_code()
 
-        area_code = lc.find_area_code('고양시 일산서구')
+        # area_code = lc.find_area_code('고양시 일산서구')
+        area_code = lc.find_area_code('오산시')
         result = make_restfull_query(area_code, '201808')
 
         print(result.status)
         # print(result.data)
         # print_xml(result.data)
         apt_ = xml_to_dict(result.data)
-        print(apt_)
-        my_apt_ = find_my_apt(apt_, '탄현동', '탄현마을(건영4)')
+
+        print(lineno())
+        my_apt_ = find_my_apt(apt_, '대원동')
         print(my_apt_)
         
 
