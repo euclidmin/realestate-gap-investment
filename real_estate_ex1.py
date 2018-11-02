@@ -93,7 +93,7 @@ class Local_code:
         eup_myen_dong = get_col_data(self.sheet, 4)
 
         local_code_record = np.array([local_code, city_state, city_gun_gu, eup_myen_dong]).transpose()
-        print(local_code_record)
+        # print(local_code_record)
 
         self.local_code_record = local_code_record
         return local_code_record
@@ -160,7 +160,7 @@ class Local_code:
         self.get_sheet('KIKcd_H.20180122', 'KIKcd_H')
         self.load_local_code_data()
         self.make_code_local()
-        print(self.code_local_)
+        # print(self.code_local_)
 
 def main():
 

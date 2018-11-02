@@ -3,6 +3,9 @@ from urllib.parse import urlencode, unquote, quote_plus
 
 import urllib3
 from urllib.parse import urlencode, unquote, quote_plus
+
+from dill.source import indent
+
 from real_estate_ex1 import Local_code
 
 
@@ -69,7 +72,7 @@ def xml_to_dict(xml_str) :
                 transaction['지번'] = item.find('지번').text
                 transaction['지역코드'] = item.find('지역코드').text
                 transaction['층'] = item.find('층').text
-                print(transaction)
+                # print(transaction)
                 apt_transactions.append(transaction)
 
         return apt_transactions
@@ -77,26 +80,16 @@ def xml_to_dict(xml_str) :
 
 
 def find_my_apt(apt_, apt_dong, apt_name=None):
-        my_apt_ = []
-        apt_dong_strip = apt_dong.strip()
+    apt_dong_strip = apt_dong.strip()
 
-        if apt_name == None :
-            pt_name_strip = ''
-            my_apt_ = find_my_apt_dong(apt_, apt)
-        else :
-            apt_name_strip = apt_name.strip()
-
-        find_my_apt_dong(apt_, apt_dong_strip, apt_name_strip)
-        return my_apt_
-
-
-def find_my_apt_dong(apt_, apt_dong_strip, apt_name_strip):
-    my_apt_ = []
-    for apt in apt_:
-        if apt['법정동'].strip() == apt_dong_strip and apt['아파트'].strip() == apt_name_strip:
-            my_apt_.append(apt)
+    if apt_name == None:
+        dong_Lda = lambda x: x['법정동'].strip() == apt_dong_strip
+        my_apt_ = list(filter(dong_Lda, apt_))
+    else:
+        apt_name_strip = apt_name.strip()
+        dong_name_Lda = lambda x: x['법정동'].strip() == apt_dong_strip and x['아파트'].strip() == apt_name_strip
+        my_apt_ = list(filter(dong_name_Lda, apt_))
     return my_apt_
-
 
 
 def lineno():
@@ -106,6 +99,9 @@ def lineno():
 
 def main():
         import sys
+        import pprint
+        from pprint import PrettyPrinter
+
         lc = Local_code()
         lc.make_local_code()
 
@@ -119,13 +115,11 @@ def main():
         apt_ = xml_to_dict(result.data)
 
         print(lineno())
-        my_apt_ = find_my_apt(apt_, '대원동')
-        print(my_apt_)
+        my_apt_ = find_my_apt(apt_, ' 원동', '대우푸르지오')
+        pp = PrettyPrinter(indent=4)
+        pp.pprint(my_apt_)
         
-
-
-        
-
+                                                                                                                                               
 
 if __name__ == '__main__' :
         main()
