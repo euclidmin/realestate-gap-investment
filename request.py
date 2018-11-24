@@ -13,7 +13,7 @@ from real_estate_ex1 import Local_code
 
 
 def make_restfull_query(lawd_cd, deal_ymd) :
-        url = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?"
+        url = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade"
         data = {
                 'serviceKey': 'B5vTA+wSQ0/S3w+rbawrLgVxGIdztJG1keqskxowzSHEDpWdpFdMHs69UgO4ei3R9aNDcqmjgANp49s/VhXiqw=='
         }
@@ -23,7 +23,10 @@ def make_restfull_query(lawd_cd, deal_ymd) :
         encoded_args = urlencode(data)
 
         http = urllib3.PoolManager()
-        ret = http.request('GET', url + encoded_args)
+        # ret = http.request('GET', url + encoded_args)
+        '''fields= 로 넘겨주게 되면 별도로 encode할 필요없다. 코드 따라가 보면 내부에서 urlencode호출됨'''
+        ret = http.request('GET', url, fields=data)
+
 
         return ret
 
