@@ -105,9 +105,13 @@ def main():
         lc = Local_code()
         lc.make_local_code()
 
+        area_code = lc.find_area_code('강서구')
+        # area_code = lc.find_area_code('연수구')
+        # area_code = lc.find_area_code('수원시 영통구')
         # area_code = lc.find_area_code('고양시 일산서구')
-        area_code = lc.find_area_code('오산시')
-        result = make_restfull_query(area_code, '201808')
+        # area_code = lc.find_area_code('오산시')
+        # area_code = lc.find_area_code('파주시')
+        result = make_restfull_query(area_code, '201810')
 
         print(result.status)
         # print(result.data)
@@ -115,11 +119,11 @@ def main():
         apt_ = xml_to_dict(result.data)
 
         print(lineno())
-        my_apt_ = find_my_apt(apt_, ' 원동', '대우푸르지오')
+        my_apt_ = find_my_apt(apt_, '가양동')
         pp = PrettyPrinter(indent=4)
         pp.pprint(my_apt_)
-        
+                                                                        
                                                                                                                                                
-
+                                                                                    
 if __name__ == '__main__' :
         main()
