@@ -31,12 +31,12 @@ def make_restfull_query(lawd_cd, deal_ymd) :
         return ret
 
 def print_xml(xml_str) :
-        import xml.etree.ElementTree as ET
+        import xml.etree.ElementTree as et
         apt_transactions = []
 
         xml_s = xml_str.decode('utf8')
         print(xml_s)
-        root = ET.fromstring(xml_s)
+        root = et.fromstring(xml_s)
 
         for item in root.iter('item') :
                 transaction = dict()
@@ -55,12 +55,12 @@ def print_xml(xml_str) :
                 apt_transactions.append(transaction)
 
 def xml_to_dict(xml_str) :
-        import xml.etree.ElementTree as ET
+        import xml.etree.ElementTree as et
         apt_transactions = list()
 
         xml_s = xml_str.decode('utf8')
         # print(xml_s)
-        root = ET.fromstring(xml_s)
+        root = et.fromstring(xml_s)
 
         for item in root.iter('item') :
                 transaction = dict()
