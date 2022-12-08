@@ -2,7 +2,7 @@ altgraph==0.16.1
 backcall==0.1.0
 bleach==3.0.0
 cachetools==2.0.1
-certifi==2018.1.18
+certifi==2022.12.7
 chardet==3.0.4
 colorama==0.3.9
 decorator==4.3.0
